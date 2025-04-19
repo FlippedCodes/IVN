@@ -9,9 +9,10 @@ services:
     environment:
       DCtoken: ${DISCORD_BOT_TOKEN}
       DBhost: db
-      DBdatabase: gurglebot
-      DBusername: gurglebot
+      DBdatabase: ivn
+      DBusername: ivn
       DBpassword: ${DB_PASSWORD}
+
   db:
     image: mariadb:latest
     restart: always
@@ -21,8 +22,8 @@ services:
       - db_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD_ROOT}
-      MYSQL_DATABASE: gurglebot
-      MYSQL_USER: gurglebot
+      MYSQL_DATABASE: ivn
+      MYSQL_USER: ivn
       MYSQL_PASSWORD: ${DB_PASSWORD}
 
 volumes:
