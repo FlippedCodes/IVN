@@ -9,7 +9,7 @@ WORKDIR /usr/src/app
 # this will cache them and speed up future builds
 FROM base AS install
 # install with --production (exclude devDependencies)
-COPY package.json bun.lockb .
+COPY package.json bun.lock .
 RUN bun install --production
 
 # copy production dependencies and source code into final image
