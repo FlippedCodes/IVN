@@ -9,7 +9,6 @@ services:
     environment:
       DCtoken: ${DISCORD_BOT_TOKEN}
       DBhost: db
-      DBdatabase: ivn
       DBusername: ivn
       DBpassword: ${DB_PASSWORD}
 
