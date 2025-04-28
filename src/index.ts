@@ -25,6 +25,9 @@ const client = new SapphireClient({
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.MessageContent,
   ],
+  logger: {
+    level: process.env.NODE_ENV === 'development' ? LogLevel.Debug : LogLevel.Info,
+  },
 });
 
 client.login(process.env.DCtoken);
