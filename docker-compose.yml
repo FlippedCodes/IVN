@@ -16,7 +16,7 @@ services:
     image: postgres:15
     restart: always
     ports:
-      - '${DB_IP}:${DB_PORT}:3306'
+      - '${DB_IP}:${DB_PORT}:5432'
     volumes:
       - db_data:/var/lib/postgresql/data/pgdata
     environment:
