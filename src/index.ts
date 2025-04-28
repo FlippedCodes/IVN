@@ -1,4 +1,9 @@
-import { SapphireClient, ApplicationCommandRegistries } from '@sapphire/framework';
+import {
+  SapphireClient,
+  ApplicationCommandRegistries,
+  LogLevel,
+  container,
+} from '@sapphire/framework';
 
 import { GatewayIntentBits } from 'discord.js';
 
@@ -32,8 +37,8 @@ await migrate(db, { migrationsFolder: './src/db/migration' });
 container.logger.info('🛢️ Synced database successfully!');
 
 client.login(process.env.DCtoken);
-console.debug('🔓 Login successful.');
 
 client.on('ready', async () => {
-  console.log(`[${packageInfo.name}] Logged in as "${client.user.tag}"!`);
+  if (!client.user) return;
+  container.logger.info(`🔓 Logged in as "${client.user.tag}"!`);
 });
