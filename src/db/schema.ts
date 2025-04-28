@@ -41,7 +41,7 @@ export const guildSettingTable = pgTable('guildSettings', {
   id: varchar({ length: 30 }).primaryKey(),
   guildID: varchar({ length: 30 }).notNull(),
 
-  teamRoleID: varchar({ length: 30 }).notNull(),
+  verifierRoleID: varchar({ length: 30 }).notNull(),
   hideOpenChannelsRoleID: varchar({ length: 30 }).notNull(),
 
   kickoffEmoji: varchar({ length: 1 }).notNull(),
