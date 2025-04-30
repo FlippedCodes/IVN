@@ -29,8 +29,8 @@ const client = new SapphireClient({
 });
 
 // TODO: Register all commands at Discord first. So we get all idHints
-// if (process.env.NODE_ENV === 'development')
-//   ApplicationCommandRegistries.setDefaultGuildIds([String(process.env.devGuild)]);
+if (process.env.NODE_ENV === 'development')
+  ApplicationCommandRegistries.setDefaultGuildIds([String(process.env.devGuild)]);
 
 // db setup and connect
 await migrate(db, { migrationsFolder: './src/db/migration' });
