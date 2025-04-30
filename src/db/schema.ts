@@ -1,34 +1,15 @@
 import { relations } from 'drizzle-orm';
 
-import { pgTable, timestamp, varchar, integer, unique, boolean, text } from 'drizzle-orm/pg-core';
-
-export const verifiedUserTable = pgTable(
-  'verifiedUsers',
-  {
-    id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    userID: varchar({ length: 30 }).notNull(),
-    guildID: varchar({ length: 30 }).notNull(),
-    teammemberID: varchar({ length: 30 }).notNull(),
-
-    createdAt: timestamp('createdAt').notNull().defaultNow(),
-    updatedAt: timestamp('updatedAt').notNull().defaultNow(),
-  },
-  (t) => [unique().on(t.userID, t.guildID)]
-);
-
-export const guildTrustTable = pgTable(
-  'guildTrusts',
-  {
-    id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    guildID: varchar({ length: 30 }).notNull(),
-    trustedGuildID: varchar({ length: 30 }).notNull(),
-    enabled: boolean().notNull().default(true),
-
-    createdAt: timestamp('createdAt').notNull().defaultNow(),
-    updatedAt: timestamp('updatedAt').notNull().defaultNow(),
-  },
-  (t) => [unique().on(t.guildID, t.trustedGuildID)]
-);
+import {
+  pgTable,
+  timestamp,
+  varchar,
+  integer,
+  unique,
+  boolean,
+  text,
+  pgEnum,
+} from 'drizzle-orm/pg-core';
 
 export const maintainerTable = pgTable('maintainers', {
   id: varchar({ length: 30 }).primaryKey(),
@@ -37,12 +18,64 @@ export const maintainerTable = pgTable('maintainers', {
   updatedAt: timestamp('updatedAt').notNull().defaultNow(),
 });
 
-export const guildSettingTable = pgTable('guildSettings', {
-  id: varchar({ length: 30 }).primaryKey(),
+export const guildTable = pgTable('guilds', {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
   guildID: varchar({ length: 30 }).notNull(),
+  enabled: boolean().notNull().default(false),
+
+  dateFormat: varchar({ length: 10 }).notNull().default('YYYY-MM-DD'),
+
+  createdAt: timestamp('createdAt').notNull().defaultNow(),
+  updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+});
+
+export const permissionEnum = pgEnum('permission', ['unused', 'requested', 'yes', 'no']);
+
+export const guildPermissionsTable = pgTable(
+  'guildPermissions',
+  {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    guildID: integer()
+      .notNull()
+      .references(() => guildTable.id),
+    partneredGuildID: integer()
+      .notNull()
+      .references(() => guildTable.id),
+    trustVerificationExchange: permissionEnum().notNull().default('unused'),
+    trustCheckin: permissionEnum().notNull().default('unused'),
+
+    createdAt: timestamp('createdAt').notNull().defaultNow(),
+    updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+  },
+  (t) => [unique().on(t.guildID, t.partneredGuildID)]
+);
+
+export const verifiedUserTable = pgTable(
+  'verifiedUsers',
+  {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    userID: varchar({ length: 30 }).notNull(),
+    guildID: integer()
+      .notNull()
+      .references(() => guildTable.id),
+    teammemberID: varchar({ length: 30 }).notNull(),
+
+    createdAt: timestamp('createdAt').notNull().defaultNow(),
+    updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+  },
+  (t) => [unique().on(t.userID, t.guildID)]
+);
+
+export const guildVerificationSettingTable = pgTable('guildVerificationSettings', {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  guildID: integer()
+    .notNull()
+    .references(() => guildTable.id),
+  enabled: boolean().notNull().default(false),
 
   verifierRoleID: varchar({ length: 30 }).notNull(),
-  hideOpenChannelsRoleID: varchar({ length: 30 }).notNull(),
+  joinRoleID: varchar({ length: 30 }).notNull(),
+  assignJoinRole: boolean().notNull().default(false),
 
   kickoffEmoji: varchar({ length: 1 }).notNull(),
   kickoffChannelID: varchar({ length: 30 }).notNull(),
@@ -54,15 +87,14 @@ export const guildSettingTable = pgTable('guildSettings', {
 
   messageCheckinInstructions: text().notNull(),
   messageGuildWelcome: text().notNull(),
+  verificationInstructionMessageID: varchar({ length: 30 }).notNull(),
   messageReminderWarning: text()
     .notNull()
     .default(
-      `Hello! Are you still there?\n**If we don't get any reply from you, we are going to close this channel in $day day$grammarDay.**`
+      `Hello $userMention! Are you still there?\n**If we don't get any reply from you, we are going to close this channel in $day day$grammarDay.**`
     ),
 
   reminderDayAmount: integer().notNull().default(3),
-
-  dateFormat: varchar({ length: 10 }).notNull().default('YYYY-MM-DD'),
 
   autoVerify: boolean().notNull().default(false),
   autoCheckIn: boolean().notNull().default(false),
@@ -70,41 +102,50 @@ export const guildSettingTable = pgTable('guildSettings', {
   createdAt: timestamp('createdAt').notNull().defaultNow(),
   updatedAt: timestamp('updatedAt').notNull().defaultNow(),
 });
-// , (t) => [
-//   check('dependency_autoVerify1', sql`${t.autoVerify} == true`),
-// ]);
 
-export const guildSettingIgnoreChannelTable = pgTable(
-  'guildSettingIgnoreChannels',
+export const guildVerificationSettingIgnoreChannelTable = pgTable(
+  'guildVerificationSettingIgnoreChannels',
   {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    guildSettingID: varchar({ length: 30 })
+    guildID: integer()
       .notNull()
-      .references(() => guildSettingTable.id),
+      .references(() => guildVerificationSettingTable.id),
     ignoreChannelID: varchar({ length: 30 }).notNull(),
 
     createdAt: timestamp('createdAt').notNull().defaultNow(),
     updatedAt: timestamp('updatedAt').notNull().defaultNow(),
   },
-  (t) => [unique().on(t.guildSettingID, t.ignoreChannelID)]
+  (t) => [unique().on(t.guildID, t.ignoreChannelID)]
 );
 
-export const guildSettingCheckinRoleTable = pgTable(
-  'guildSettingCheckinRoles',
+export const guildVerificationSettingCheckinRoleTable = pgTable(
+  'guildVerificationSettingCheckinRoles',
   {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    guildSettingID: varchar({ length: 30 })
+    guildID: integer()
       .notNull()
-      .references(() => guildSettingTable.id),
+      .references(() => guildVerificationSettingTable.id),
     checkinRoleID: varchar({ length: 30 }).notNull(),
 
     createdAt: timestamp('createdAt').notNull().defaultNow(),
     updatedAt: timestamp('updatedAt').notNull().defaultNow(),
   },
-  (t) => [unique().on(t.guildSettingID, t.checkinRoleID)]
+  (t) => [unique().on(t.guildID, t.checkinRoleID)]
 );
 
-export const guildSettingRelations = relations(guildSettingTable, ({ many }) => ({
-  guildSettingIgnoreChannelTables: many(guildSettingIgnoreChannelTable),
-  guildSettingCheckinRoles: many(guildSettingCheckinRoleTable),
+export const guildRelations = relations(guildTable, ({ one, many }) => ({
+  guildVerificationSetting: one(guildVerificationSettingTable, {
+    fields: [guildTable.id],
+    references: [guildVerificationSettingTable.guildID],
+  }),
+  verifiedUsers: many(verifiedUserTable),
+  guildPermissions: many(guildPermissionsTable),
 }));
+
+export const guildVerificationSettingRelations = relations(
+  guildVerificationSettingTable,
+  ({ many }) => ({
+    guildSettingIgnoreChannels: many(guildVerificationSettingIgnoreChannelTable),
+    guildSettingCheckinRoles: many(guildVerificationSettingCheckinRoleTable),
+  })
+);
