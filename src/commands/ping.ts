@@ -23,13 +23,19 @@ export class PingCommand extends Command {
   }
 
   public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
-    await interaction.reply({ content: `Ping?`, flags: MessageFlags.Ephemeral });
-    const msg = await interaction.fetchReply();
+    const interactionCallbackResponse = await interaction.reply({
+      content: `Ping?`,
+      withResponse: true,
+      flags: MessageFlags.Ephemeral,
+    });
+    const msg = interactionCallbackResponse.resource!.message!;
 
-    if (!isMessageInstance(msg)) return interaction.editReply('Failed to retrieve ping :(');
+    if (isMessageInstance(msg)) {
+      const diff = msg.createdTimestamp - interaction.createdTimestamp;
+      const ping = Math.round(this.container.client.ws.ping);
+      return interaction.editReply(`Pong 🏓! (Round trip took: ${diff}ms. Heartbeat: ${ping}ms.)`);
+    }
 
-    const diff = msg.createdTimestamp - interaction.createdTimestamp;
-    const ping = Math.round(this.container.client.ws.ping);
-    return interaction.editReply(`Pong 🏓! (Round trip took: ${diff}ms. Heartbeat: ${ping}ms.)`);
+    return interaction.editReply('Failed to retrieve ping :(');
   }
 }
