@@ -5,7 +5,7 @@ import {
   container,
 } from '@sapphire/framework';
 
-import { GatewayIntentBits } from 'discord.js';
+import { GatewayIntentBits, Partials } from 'discord.js';
 
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 
@@ -19,6 +19,7 @@ const client = new SapphireClient({
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.MessageContent,
   ],
+  partials: [Partials.Reaction],
   logger: {
     level: process.env.NODE_ENV === 'development' ? LogLevel.Debug : LogLevel.Info,
   },
