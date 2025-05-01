@@ -73,21 +73,22 @@ export const guildVerificationSettingTable = pgTable('guildVerificationSettings'
     .references(() => guildTable.id),
   enabled: boolean().notNull().default(false),
 
-  verifierRoleID: varchar({ length: 30 }).notNull(),
-  joinRoleID: varchar({ length: 30 }).notNull(),
-  assignJoinRole: boolean().notNull().default(false),
+  verifierRoleID: varchar({ length: 30 }),
+  joinRoleID: varchar({ length: 30 }),
 
-  kickoffEmoji: varchar({ length: 1 }).notNull(),
-  kickoffChannelID: varchar({ length: 30 }).notNull(),
-  kickoffMessageID: varchar({ length: 30 }).notNull(),
+  kickoffEmoji: varchar({ length: 1 }),
+  kickoffChannelID: varchar({ length: 30 }),
+  kickoffMessageID: varchar({ length: 30 }),
 
-  categoryID: varchar({ length: 30 }).notNull(),
-  guildWelcomeChannelID: varchar({ length: 30 }).notNull(),
-  archiveChannelID: varchar({ length: 30 }).notNull(),
+  ticketsCategoryID: varchar({ length: 30 }),
 
-  messageCheckinInstructions: text().notNull(),
-  messageGuildWelcome: text().notNull(),
-  verificationInstructionMessageID: varchar({ length: 30 }).notNull(),
+  welcomeChannelID: varchar({ length: 30 }),
+  welcomeMessage: text(),
+
+  transcriptChannelID: varchar({ length: 30 }),
+
+  checkinMessageInstructions: text(),
+  verificationInstructionMessageID: varchar({ length: 30 }),
   messageReminderWarning: text()
     .notNull()
     .default(

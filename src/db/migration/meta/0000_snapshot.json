@@ -1,5 +1,5 @@
 {
-  "id": "42ef6c09-648e-4ec7-8256-d29d08eee7e9",
+  "id": "4508f96a-c585-42ad-b976-62796e46569a",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -347,74 +347,67 @@
           "name": "verifierRoleID",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "joinRoleID": {
           "name": "joinRoleID",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
-        },
-        "assignJoinRole": {
-          "name": "assignJoinRole",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true,
-          "default": false
+          "notNull": false
         },
         "kickoffEmoji": {
           "name": "kickoffEmoji",
           "type": "varchar(1)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "kickoffChannelID": {
           "name": "kickoffChannelID",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "kickoffMessageID": {
           "name": "kickoffMessageID",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
-        "categoryID": {
-          "name": "categoryID",
+        "ticketsCategoryID": {
+          "name": "ticketsCategoryID",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
-        "guildWelcomeChannelID": {
-          "name": "guildWelcomeChannelID",
+        "welcomeChannelID": {
+          "name": "welcomeChannelID",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
-        "archiveChannelID": {
-          "name": "archiveChannelID",
-          "type": "varchar(30)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "messageCheckinInstructions": {
-          "name": "messageCheckinInstructions",
+        "welcomeMessage": {
+          "name": "welcomeMessage",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
-        "messageGuildWelcome": {
-          "name": "messageGuildWelcome",
+        "transcriptChannelID": {
+          "name": "transcriptChannelID",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "checkinMessageInstructions": {
+          "name": "checkinMessageInstructions",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "verificationInstructionMessageID": {
           "name": "verificationInstructionMessageID",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "messageReminderWarning": {
           "name": "messageReminderWarning",
