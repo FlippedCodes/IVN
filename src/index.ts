@@ -34,8 +34,3 @@ await migrate(db, { migrationsFolder: './src/db/migration' });
 container.logger.info('🛢️ Synced database successfully!');
 
 client.login(process.env.DCtoken);
-
-client.on('ready', async () => {
-  if (!client.user) return;
-  container.logger.info(`🔓 Logged in as "${client.user.tag}"!`);
-});
