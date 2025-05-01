@@ -6,4 +6,4 @@ import * as schema from './schema';
 
 // Object.assign(dbConfig.dbCredentials, { multipleStatements: true });
 
-export const db = drizzle({ connection: dbConfig.dbCredentials }, { schema });
+export const db = drizzle({ connection: dbConfig.dbCredentials }, { schema, casing: 'camelCase' });
