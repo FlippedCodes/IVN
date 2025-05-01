@@ -15,7 +15,10 @@ export const maintainerTable = pgTable('maintainers', {
   id: varchar({ length: 30 }).primaryKey(),
 
   createdAt: timestamp('createdAt').notNull().defaultNow(),
-  updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+  updatedAt: timestamp('updatedAt')
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
 });
 
 export const guildTable = pgTable('guilds', {
@@ -26,7 +29,10 @@ export const guildTable = pgTable('guilds', {
   dateFormat: varchar({ length: 10 }).notNull().default('YYYY-MM-DD'),
 
   createdAt: timestamp('createdAt').notNull().defaultNow(),
-  updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+  updatedAt: timestamp('updatedAt')
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
 });
 
 export const permissionEnum = pgEnum('permission', ['unused', 'requested', 'yes', 'no']);
@@ -45,7 +51,10 @@ export const guildPermissionsTable = pgTable(
     trustCheckin: permissionEnum().notNull().default('unused'),
 
     createdAt: timestamp('createdAt').notNull().defaultNow(),
-    updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+    updatedAt: timestamp('updatedAt')
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
   },
   (t) => [unique().on(t.guildID, t.partneredGuildID)]
 );
@@ -61,7 +70,10 @@ export const verifiedUserTable = pgTable(
     teammemberID: varchar({ length: 30 }).notNull(),
 
     createdAt: timestamp('createdAt').notNull().defaultNow(),
-    updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+    updatedAt: timestamp('updatedAt')
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
   },
   (t) => [unique().on(t.userID, t.guildID)]
 );
@@ -101,7 +113,10 @@ export const guildVerificationSettingTable = pgTable('guildVerificationSettings'
   autoCheckIn: boolean().notNull().default(false),
 
   createdAt: timestamp('createdAt').notNull().defaultNow(),
-  updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+  updatedAt: timestamp('updatedAt')
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
 });
 
 export const guildVerificationSettingIgnoreChannelTable = pgTable(
@@ -114,7 +129,10 @@ export const guildVerificationSettingIgnoreChannelTable = pgTable(
     ignoreChannelID: varchar({ length: 30 }).notNull(),
 
     createdAt: timestamp('createdAt').notNull().defaultNow(),
-    updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+    updatedAt: timestamp('updatedAt')
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
   },
   (t) => [unique().on(t.guildID, t.ignoreChannelID)]
 );
@@ -129,7 +147,10 @@ export const guildVerificationSettingCheckinRoleTable = pgTable(
     checkinRoleID: varchar({ length: 30 }).notNull(),
 
     createdAt: timestamp('createdAt').notNull().defaultNow(),
-    updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+    updatedAt: timestamp('updatedAt')
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
   },
   (t) => [unique().on(t.guildID, t.checkinRoleID)]
 );
