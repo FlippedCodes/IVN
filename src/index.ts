@@ -11,10 +11,6 @@ import { migrate } from 'drizzle-orm/node-postgres/migrator';
 
 import { db } from './db/connect';
 
-import * as packageInfo from '../package.json';
-
-import * as config from '../config.json';
-
 const client = new SapphireClient({
   intents: [
     GatewayIntentBits.Guilds,
