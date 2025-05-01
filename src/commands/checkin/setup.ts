@@ -8,7 +8,7 @@ export class PingCommand extends Command {
   public constructor(context: Command.LoaderContext, options: Command.Options) {
     super(context, {
       ...options,
-      description: 'Ping bot to see, if it is alive',
+      description: 'Setup for different IVN-features.',
     });
   }
 
