@@ -92,7 +92,7 @@ export const guildVerificationSettingTable = pgTable('guildVerificationSettings'
   kickoffChannelID: varchar({ length: 30 }),
   kickoffMessageID: varchar({ length: 30 }),
 
-  ticketsCategoryID: varchar({ length: 30 }),
+  checkinCategoryID: varchar({ length: 30 }),
 
   welcomeChannelID: varchar({ length: 30 }),
   welcomeMessage: text(),
