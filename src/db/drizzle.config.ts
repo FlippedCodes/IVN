@@ -5,10 +5,6 @@ export default {
   out: './src/db/migration',
   dialect: 'postgresql',
   dbCredentials: {
-    host: process.env.DBhost,
-    port: parseInt(<string>process.env.DBport, 10) || 5432,
-    database: process.env.DBusername,
-    user: process.env.DBusername,
-    password: process.env.DBpassword,
+    url: `postgresql://${process.env.DBusername}:${process.env.DBpassword}@${process.env.DBhost}:${parseInt(<string>process.env.DBport, 10) || 5432}/${process.env.DBusername}`,
   },
 } satisfies Config;
