@@ -19,7 +19,7 @@ const client = new SapphireClient({
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.MessageContent,
   ],
-  partials: [Partials.Reaction],
+  partials: [Partials.Message, Partials.Reaction],
   logger: {
     level: process.env.NODE_ENV === 'development' ? LogLevel.Debug : LogLevel.Info,
   },
