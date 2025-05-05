@@ -35,6 +35,15 @@ export const guildTable = pgTable('guilds', {
     .$onUpdate(() => new Date()),
 });
 
+export const guildRelations = relations(guildTable, ({ one, many }) => ({
+  guildVerificationSetting: one(guildVerificationSettingTable, {
+    fields: [guildTable.id],
+    references: [guildVerificationSettingTable.guildID],
+  }),
+  verifiedUsers: many(verifiedUserTable),
+  guildPermissions: many(guildPermissionsTable),
+}));
+
 export const permissionEnum = pgEnum('permission', ['unused', 'requested', 'yes', 'no']);
 
 export const guildPermissionsTable = pgTable(
@@ -59,6 +68,13 @@ export const guildPermissionsTable = pgTable(
   (t) => [unique().on(t.guildID, t.partneredGuildID)]
 );
 
+export const guildPermissionRelations = relations(guildPermissionsTable, ({ one }) => ({
+  guilds: one(guildTable, {
+    fields: [guildPermissionsTable.guildID],
+    references: [guildTable.id],
+  }),
+}));
+
 export const verifiedUserTable = pgTable(
   'verifiedUsers',
   {
@@ -77,6 +93,13 @@ export const verifiedUserTable = pgTable(
   },
   (t) => [unique().on(t.userID, t.guildID)]
 );
+
+export const verifiedUserRelations = relations(verifiedUserTable, ({ one }) => ({
+  guilds: one(guildTable, {
+    fields: [verifiedUserTable.guildID],
+    references: [guildTable.id],
+  }),
+}));
 
 export const guildVerificationSettingTable = pgTable('guildVerificationSettings', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -101,6 +124,7 @@ export const guildVerificationSettingTable = pgTable('guildVerificationSettings'
 
   checkinMessageInstructions: text(),
   verificationInstructionMessageID: varchar({ length: 30 }),
+  verificationInstructionMessageTitleIndex: integer(),
   messageReminderWarning: text()
     .notNull()
     .default(
@@ -119,6 +143,14 @@ export const guildVerificationSettingTable = pgTable('guildVerificationSettings'
     .$onUpdate(() => new Date()),
 });
 
+export const guildVerificationSettingRelations = relations(
+  guildVerificationSettingTable,
+  ({ many }) => ({
+    guildSettingIgnoreChannels: many(guildVerificationSettingIgnoreChannelTable),
+    guildSettingCheckinRoles: many(guildVerificationSettingCheckinRoleTable),
+  })
+);
+
 export const guildVerificationSettingIgnoreChannelTable = pgTable(
   'guildVerificationSettingIgnoreChannels',
   {
@@ -135,6 +167,16 @@ export const guildVerificationSettingIgnoreChannelTable = pgTable(
       .$onUpdate(() => new Date()),
   },
   (t) => [unique().on(t.guildID, t.ignoreChannelID)]
+);
+
+export const guildVerificationSettingIgnoreChannelRelations = relations(
+  guildVerificationSettingIgnoreChannelTable,
+  ({ one }) => ({
+    guilds: one(guildVerificationSettingTable, {
+      fields: [guildVerificationSettingIgnoreChannelTable.guildID],
+      references: [guildVerificationSettingTable.id],
+    }),
+  })
 );
 
 export const guildVerificationSettingCheckinRoleTable = pgTable(
@@ -155,19 +197,12 @@ export const guildVerificationSettingCheckinRoleTable = pgTable(
   (t) => [unique().on(t.guildID, t.checkinRoleID)]
 );
 
-export const guildRelations = relations(guildTable, ({ one, many }) => ({
-  guildVerificationSetting: one(guildVerificationSettingTable, {
-    fields: [guildTable.id],
-    references: [guildVerificationSettingTable.guildID],
-  }),
-  verifiedUsers: many(verifiedUserTable),
-  guildPermissions: many(guildPermissionsTable),
-}));
-
-export const guildVerificationSettingRelations = relations(
-  guildVerificationSettingTable,
-  ({ many }) => ({
-    guildSettingIgnoreChannels: many(guildVerificationSettingIgnoreChannelTable),
-    guildSettingCheckinRoles: many(guildVerificationSettingCheckinRoleTable),
+export const guildVerificationSettingCheckinRoleRelations = relations(
+  guildVerificationSettingCheckinRoleTable,
+  ({ one }) => ({
+    guilds: one(guildVerificationSettingTable, {
+      fields: [guildVerificationSettingCheckinRoleTable.guildID],
+      references: [guildVerificationSettingTable.id],
+    }),
   })
 );
