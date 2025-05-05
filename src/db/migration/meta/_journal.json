@@ -8,6 +8,20 @@
       "when": 1746137564500,
       "tag": "0000_next_nomad",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1746145807436,
+      "tag": "0001_many_marauders",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1746146267514,
+      "tag": "0002_omniscient_morph",
+      "breakpoints": true
     }
   ]
 }

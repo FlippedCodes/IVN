@@ -1,0 +1,1 @@
+ALTER TABLE "guildVerificationSettings" RENAME COLUMN "ticketsCategoryID" TO "checkinCategoryID";

@@ -1,0 +1,608 @@
+{
+  "id": "75243709-3b32-407d-9ff0-1cc0e6853666",
+  "prevId": "34b93d83-0aa7-4c5b-9321-ea9089310dec",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.guildPermissions": {
+      "name": "guildPermissions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "guildPermissions_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "guildID": {
+          "name": "guildID",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "partneredGuildID": {
+          "name": "partneredGuildID",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "trustVerificationExchange": {
+          "name": "trustVerificationExchange",
+          "type": "permission",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'unused'"
+        },
+        "trustCheckin": {
+          "name": "trustCheckin",
+          "type": "permission",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'unused'"
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "guildPermissions_guildID_guilds_id_fk": {
+          "name": "guildPermissions_guildID_guilds_id_fk",
+          "tableFrom": "guildPermissions",
+          "tableTo": "guilds",
+          "columnsFrom": ["guildID"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "guildPermissions_partneredGuildID_guilds_id_fk": {
+          "name": "guildPermissions_partneredGuildID_guilds_id_fk",
+          "tableFrom": "guildPermissions",
+          "tableTo": "guilds",
+          "columnsFrom": ["partneredGuildID"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "guildPermissions_guildID_partneredGuildID_unique": {
+          "name": "guildPermissions_guildID_partneredGuildID_unique",
+          "nullsNotDistinct": false,
+          "columns": ["guildID", "partneredGuildID"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.guilds": {
+      "name": "guilds",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "guilds_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "guildID": {
+          "name": "guildID",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "enabled": {
+          "name": "enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "dateFormat": {
+          "name": "dateFormat",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'YYYY-MM-DD'"
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.guildVerificationSettingCheckinRoles": {
+      "name": "guildVerificationSettingCheckinRoles",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "guildVerificationSettingCheckinRoles_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "guildID": {
+          "name": "guildID",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "checkinRoleID": {
+          "name": "checkinRoleID",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "guildVerificationSettingCheckinRoles_guildID_guildVerificationSettings_id_fk": {
+          "name": "guildVerificationSettingCheckinRoles_guildID_guildVerificationSettings_id_fk",
+          "tableFrom": "guildVerificationSettingCheckinRoles",
+          "tableTo": "guildVerificationSettings",
+          "columnsFrom": ["guildID"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "guildVerificationSettingCheckinRoles_guildID_checkinRoleID_unique": {
+          "name": "guildVerificationSettingCheckinRoles_guildID_checkinRoleID_unique",
+          "nullsNotDistinct": false,
+          "columns": ["guildID", "checkinRoleID"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.guildVerificationSettingIgnoreChannels": {
+      "name": "guildVerificationSettingIgnoreChannels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "guildVerificationSettingIgnoreChannels_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "guildID": {
+          "name": "guildID",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ignoreChannelID": {
+          "name": "ignoreChannelID",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "guildVerificationSettingIgnoreChannels_guildID_guildVerificationSettings_id_fk": {
+          "name": "guildVerificationSettingIgnoreChannels_guildID_guildVerificationSettings_id_fk",
+          "tableFrom": "guildVerificationSettingIgnoreChannels",
+          "tableTo": "guildVerificationSettings",
+          "columnsFrom": ["guildID"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "guildVerificationSettingIgnoreChannels_guildID_ignoreChannelID_unique": {
+          "name": "guildVerificationSettingIgnoreChannels_guildID_ignoreChannelID_unique",
+          "nullsNotDistinct": false,
+          "columns": ["guildID", "ignoreChannelID"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.guildVerificationSettings": {
+      "name": "guildVerificationSettings",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "guildVerificationSettings_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "guildID": {
+          "name": "guildID",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "enabled": {
+          "name": "enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "verifierRoleID": {
+          "name": "verifierRoleID",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "joinRoleID": {
+          "name": "joinRoleID",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "kickoffEmoji": {
+          "name": "kickoffEmoji",
+          "type": "varchar(1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "kickoffChannelID": {
+          "name": "kickoffChannelID",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "kickoffMessageID": {
+          "name": "kickoffMessageID",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "checkinCategoryID": {
+          "name": "checkinCategoryID",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "welcomeChannelID": {
+          "name": "welcomeChannelID",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "welcomeMessage": {
+          "name": "welcomeMessage",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "transcriptChannelID": {
+          "name": "transcriptChannelID",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "checkinMessageInstructions": {
+          "name": "checkinMessageInstructions",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "verificationInstructionMessageID": {
+          "name": "verificationInstructionMessageID",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "verificationInstructionMessageTitleIndex": {
+          "name": "verificationInstructionMessageTitleIndex",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "messageReminderWarning": {
+          "name": "messageReminderWarning",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Hello $userMention! Are you still there?\n**If we don''t get any reply from you, we are going to close this channel in $day day$grammarDay.**'"
+        },
+        "reminderDayAmount": {
+          "name": "reminderDayAmount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 3
+        },
+        "autoVerify": {
+          "name": "autoVerify",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "autoCheckIn": {
+          "name": "autoCheckIn",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "guildVerificationSettings_guildID_guilds_id_fk": {
+          "name": "guildVerificationSettings_guildID_guilds_id_fk",
+          "tableFrom": "guildVerificationSettings",
+          "tableTo": "guilds",
+          "columnsFrom": ["guildID"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.maintainers": {
+      "name": "maintainers",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(30)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.verifiedUsers": {
+      "name": "verifiedUsers",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "verifiedUsers_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "userID": {
+          "name": "userID",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "guildID": {
+          "name": "guildID",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "teammemberID": {
+          "name": "teammemberID",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "verifiedUsers_guildID_guilds_id_fk": {
+          "name": "verifiedUsers_guildID_guilds_id_fk",
+          "tableFrom": "verifiedUsers",
+          "tableTo": "guilds",
+          "columnsFrom": ["guildID"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "verifiedUsers_userID_guildID_unique": {
+          "name": "verifiedUsers_userID_guildID_unique",
+          "nullsNotDistinct": false,
+          "columns": ["userID", "guildID"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.permission": {
+      "name": "permission",
+      "schema": "public",
+      "values": ["unused", "requested", "yes", "no"]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

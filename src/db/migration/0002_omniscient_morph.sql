@@ -1,0 +1,1 @@
+ALTER TABLE "guildVerificationSettings" ADD COLUMN "verificationInstructionMessageTitleIndex" integer;
