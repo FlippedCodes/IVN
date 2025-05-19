@@ -123,6 +123,7 @@ export const guildVerificationSettingTable = pgTable('guildVerificationSettings'
   transcriptChannelID: varchar({ length: 30 }),
 
   checkinMessageInstructions: text(),
+  verificationInstructionChannelID: varchar({ length: 30 }),
   verificationInstructionMessageID: varchar({ length: 30 }),
   verificationInstructionMessageTitleIndex: integer(),
   messageReminderWarning: text()
@@ -145,9 +146,13 @@ export const guildVerificationSettingTable = pgTable('guildVerificationSettings'
 
 export const guildVerificationSettingRelations = relations(
   guildVerificationSettingTable,
-  ({ many }) => ({
+  ({ one, many }) => ({
     guildSettingIgnoreChannels: many(guildVerificationSettingIgnoreChannelTable),
     guildSettingCheckinRoles: many(guildVerificationSettingCheckinRoleTable),
+    guilds: one(guildTable, {
+      fields: [guildVerificationSettingTable.guildID],
+      references: [guildTable.id],
+    }),
   })
 );
 
