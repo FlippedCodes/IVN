@@ -9,7 +9,7 @@ import { GatewayIntentBits, Partials } from 'discord.js';
 
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 
-import { db } from './db/connect';
+import { db } from './lib/database/connect';
 
 const client = new SapphireClient({
   intents: [
@@ -30,7 +30,7 @@ if (process.env.NODE_ENV === 'development')
   ApplicationCommandRegistries.setDefaultGuildIds([String(process.env.devGuild)]);
 
 // db setup and connect
-await migrate(db, { migrationsFolder: './src/db/migration' });
+await migrate(db, { migrationsFolder: './src/lib/database/migration' });
 container.logger.info('🛢️ Synced database successfully!');
 
 client.login(process.env.DCtoken);

@@ -7,7 +7,7 @@
   "scripts": {
     "start": "bun run ./src/index.js",
     "prepare": "husky",
-    "db:migration": "drizzle-kit generate --config src/db/drizzle.config.ts"
+    "db:migration": "drizzle-kit generate --config src/lib/database/drizzle.config.ts"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
