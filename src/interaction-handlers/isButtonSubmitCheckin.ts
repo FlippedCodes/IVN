@@ -15,7 +15,7 @@ const buttons = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComp
   new ButtonBuilder()
     .setCustomId('checkin_submit_disabled')
     .setEmoji('👌')
-    .setLabel("I'm ready!")
+    .setLabel(`I'm ready!`)
     .setStyle(ButtonStyle.Primary)
     .setDisabled(true),
 ]);
