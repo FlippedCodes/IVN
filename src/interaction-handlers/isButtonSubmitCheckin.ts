@@ -39,7 +39,10 @@ export class HowDoWeUseThemExample extends InteractionHandler {
 
     const found = await messages.filter((msg) => msg.author.id === channel.name);
     if (found.size === 0)
-      return messageFail(interaction, 'Please answer the questions, before pressing the button.');
+      return messageFail(
+        interaction,
+        'Please follow the instructions above, before pressing the button.'
+      );
 
     // gray out button
     interaction.message.edit({ components: [buttons] });
