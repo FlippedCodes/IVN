@@ -35,8 +35,10 @@ export class HowDoWeUseThemExample extends InteractionHandler {
     // ping team, once
     const channel = interaction.channel!;
     const messages = await channel.messages.fetch();
+    // TS check
     if (channel.type !== ChannelType.GuildText) return;
 
+    // check if user send a message
     const found = await messages.filter((msg) => msg.author.id === channel.name);
     if (found.size === 0)
       return messageFail(
