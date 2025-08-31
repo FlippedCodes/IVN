@@ -27,6 +27,7 @@ export const guildTable = pgTable('guilds', {
   enabled: boolean().notNull().default(false),
 
   dateFormat: varchar({ length: 10 }).notNull().default('YYYY-MM-DD'),
+  templateChannelID: varchar({ length: 30 }).notNull(),
 
   createdAt: timestamp('createdAt').notNull().defaultNow(),
   updatedAt: timestamp('updatedAt')
@@ -107,6 +108,7 @@ export const guildVerificationSettingTable = pgTable('guildVerificationSettings'
     .notNull()
     .references(() => guildTable.id),
   enabled: boolean().notNull().default(false),
+  enabledAgeVerification: boolean().notNull().default(false),
 
   verifierRoleID: varchar({ length: 30 }),
   joinRoleID: varchar({ length: 30 }),
@@ -122,9 +124,9 @@ export const guildVerificationSettingTable = pgTable('guildVerificationSettings'
 
   transcriptChannelID: varchar({ length: 30 }),
 
-  checkinMessageInstructions: text(),
-  verificationInstructionChannelID: varchar({ length: 30 }),
+  checkinInstructionMessageID: varchar({ length: 30 }).notNull(),
   verificationInstructionMessageID: varchar({ length: 30 }),
+  verificationInstructionChannelID: varchar({ length: 30 }),
   verificationInstructionMessageTitleIndex: integer(),
   messageReminderWarning: text()
     .notNull()
