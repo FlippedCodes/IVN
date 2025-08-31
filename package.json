@@ -34,11 +34,13 @@
     "@kaname-png/plugin-subcommands-advanced": "^2.5.0",
     "@sapphire/framework": "^5.3.6",
     "@sapphire/plugin-subcommands": "^7.0.1",
+    "@types/luxon": "^3.6.2",
     "bufferutil": "^4.0.9",
     "discord.js": "^14.21.0",
     "dotenv": "^16.6.1",
     "drizzle-orm": "^0.42.0",
     "handlebars": "^4.7.8",
+    "luxon": "^3.7.1",
     "pg": "^8.16.3"
   }
 }
