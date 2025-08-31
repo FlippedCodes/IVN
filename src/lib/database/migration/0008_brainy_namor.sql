@@ -1,0 +1,1 @@
+ALTER TABLE "guilds" ALTER COLUMN "templateChannelID" SET NOT NULL;

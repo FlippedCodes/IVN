@@ -1,0 +1,1 @@
+ALTER TABLE "guildVerificationSettings" ADD COLUMN "enabledAgeVerification" boolean DEFAULT false NOT NULL;

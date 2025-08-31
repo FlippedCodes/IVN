@@ -1,0 +1,2 @@
+ALTER TABLE "guildVerificationSettings" ADD COLUMN "checkinMessageInstructionTemplateID" varchar(30);--> statement-breakpoint
+ALTER TABLE "guildVerificationSettings" DROP COLUMN "checkinMessageInstructions";
